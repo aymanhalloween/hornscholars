@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function formatScholarName(
   arabicName: string,
   englishName: string,
-  somaliName?: string
+  somaliName?: string | null
 ): {
   primary: string
   secondary: string
@@ -21,7 +21,7 @@ export function formatScholarName(
   }
 }
 
-export function calculateScholarAge(birthYear?: number, deathYear?: number) {
+export function calculateScholarAge(birthYear?: number | null, deathYear?: number | null) {
   if (!birthYear || !deathYear) return null
   return deathYear - birthYear
 }

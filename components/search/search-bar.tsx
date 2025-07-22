@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useRouter } from 'next/navigation'
 import { Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -17,13 +18,21 @@ export function SearchBar({
   onSearch,
   className,
 }: SearchBarProps) {
+  const router = useRouter()
   const [query, setQuery] = React.useState('')
   const [isFocused, setIsFocused] = React.useState(false)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (query.trim()) {
-      onSearch?.(query.trim())
+    const trimmedQuery = query.trim()
+    
+    if (trimmedQuery) {
+      // Use custom onSearch handler if provided, otherwise navigate to search page
+      if (onSearch) {
+        onSearch(trimmedQuery)
+      } else {
+        router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`)
+      }
     }
   }
 

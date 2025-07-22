@@ -2,12 +2,12 @@ export interface Scholar {
   id: string
   name_arabic: string
   name_english: string
-  name_somali?: string
-  birth_year?: number
-  death_year?: number
-  biography?: string
+  name_somali: string | null
+  birth_year: number | null
+  death_year: number | null
+  biography: string | null
   locations?: Location[]
-  specializations?: string[]
+  specializations: string[] | null
   created_at: string
   updated_at: string
 }
