@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Professional Color System */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e5e5e5;
+  --color-gray-500: #737373;
+  --color-gray-900: #171717;
+  
+  --color-blue-50: #eff6ff;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  
+  --color-amber-50: #fffbeb;
+  --color-amber-600: #d97706;
+  
+  /* Typography */
+  --font-arabic: 'Noto Sans Arabic', sans-serif;
+  --font-latin: 'Inter', sans-serif;
+  
+  /* Spacing System - 8px grid */
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem;  /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem;    /* 16px */
+  --spacing-6: 1.5rem;  /* 24px */
+  --spacing-8: 2rem;    /* 32px */
+  --spacing-12: 3rem;   /* 48px */
+  --spacing-16: 4rem;   /* 64px */
+  
+  /* Shadows - Subtle elevation */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Border Radius */
+  --radius-sm: 0.125rem; /* 2px */
+  --radius-md: 0.375rem; /* 6px */
+  --radius-lg: 0.5rem;   /* 8px */
+}
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply bg-white text-gray-900 font-latin;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Typography Scale */
+  h1 {
+    @apply text-2xl font-semibold text-gray-900 tracking-tight;
+  }
+  
+  h2 {
+    @apply text-xl font-semibold text-gray-900 tracking-tight;
+  }
+  
+  h3 {
+    @apply text-lg font-medium text-gray-900;
+  }
+  
+  p {
+    @apply text-base text-gray-700 leading-relaxed;
+  }
+  
+  /* Arabic Text Styling */
+  .text-arabic {
+    font-family: var(--font-arabic);
+    direction: rtl;
+    text-align: right;
+    line-height: 1.8;
+  }
+  
+  /* Focus States - Clean blue rings */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600;
+  }
+  
+  /* Interactive States */
+  .interactive {
+    @apply transition-colors duration-200;
+  }
+  
+  .interactive:hover {
+    @apply text-blue-600;
+  }
+  
+  /* Card Styles */
+  .card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-200 hover:border-gray-300 hover:shadow-md;
+  }
+}
+
+@layer components {
+  /* Button Variants */
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-600/20;
+    @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-500/20;
+    @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2;
+  }
+  
+  .btn-ghost {
+    @apply text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:ring-gray-500/20;
+    @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2;
+  }
+  
+  /* Input Styles */
+  .input {
+    @apply border border-gray-200 rounded-md px-3 py-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600;
+    @apply transition-colors duration-200;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    @apply w-full max-w-2xl mx-auto relative;
+  }
+  
+  .search-input {
+    @apply w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600;
+    @apply text-base placeholder-gray-500;
+    @apply transition-all duration-200;
+  }
+}
