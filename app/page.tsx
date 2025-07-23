@@ -14,7 +14,7 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="flex gap-x-6">
-            <Link href="/search" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
+            <Link href="/scholars" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
               Scholars
             </Link>
             <Link href="/timeline" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
@@ -109,7 +109,7 @@ export default function HomePage() {
                   Find scholars by name, specialization, or time period across
                   Arabic, English, and Somali sources.
                 </p>
-                <Link href="/search">
+                <Link href="/scholars">
                   <Button className="mt-4 text-sm">
                     Explore Scholars
                   </Button>

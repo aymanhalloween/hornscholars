@@ -12,12 +12,12 @@ interface WorkWithAuthors extends Work {
 
 async function getWorksData() {
   try {
-    // Fetch works with their authors
+    // Fetch works with their authors (using left join so works show even without authors)
     const { data: works, error } = await supabase
       .from('works')
       .select(`
         *,
-        work_authors!inner(
+        work_authors(
           author_role,
           attribution_certainty,
           scholar:scholars(
