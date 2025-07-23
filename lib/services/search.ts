@@ -38,6 +38,15 @@ export async function searchScholars(
         death_location: item.death_location,
         biography: item.biography,
         specializations: item.specializations || [],
+        major_works: item.major_works || [],
+        teaching_positions: item.teaching_positions || [],
+        scholarly_achievements: item.scholarly_achievements || [],
+        students: item.students || [],
+        notable_contributions: item.notable_contributions,
+        intellectual_lineage: item.intellectual_lineage,
+        manuscripts_authored: item.manuscripts_authored,
+        teaching_years_start: item.teaching_years_start,
+        teaching_years_end: item.teaching_years_end,
         created_at: '', // Not returned by search function
         updated_at: '', // Not returned by search function
         locations: [], // Will be loaded separately if needed
@@ -105,6 +114,15 @@ export async function getScholarById(id: string): Promise<Scholar | null> {
       death_location: data.death_location,
       biography: data.biography,
       specializations: data.specializations || [],
+      major_works: data.major_works || [],
+      teaching_positions: data.teaching_positions || [],
+      scholarly_achievements: data.scholarly_achievements || [],
+      students: data.students || [],
+      notable_contributions: data.notable_contributions,
+      intellectual_lineage: data.intellectual_lineage,
+      manuscripts_authored: data.manuscripts_authored,
+      teaching_years_start: data.teaching_years_start,
+      teaching_years_end: data.teaching_years_end,
       created_at: data.created_at,
       updated_at: data.updated_at,
       locations: data.scholar_locations?.map((sl: any) => ({
@@ -167,6 +185,28 @@ function getHighlightedFields(query: string, item: any): string[] {
     spec.toLowerCase().includes(lowercaseQuery)
   )) {
     fields.push('specializations')
+  }
+
+  if (item.major_works?.some((work: string) => 
+    work.toLowerCase().includes(lowercaseQuery)
+  )) {
+    fields.push('major_works')
+  }
+
+  if (item.teaching_positions?.some((pos: string) => 
+    pos.toLowerCase().includes(lowercaseQuery)
+  )) {
+    fields.push('teaching_positions')
+  }
+
+  if (item.scholarly_achievements?.some((achievement: string) => 
+    achievement.toLowerCase().includes(lowercaseQuery)
+  )) {
+    fields.push('scholarly_achievements')
+  }
+
+  if (item.notable_contributions?.toLowerCase().includes(lowercaseQuery)) {
+    fields.push('notable_contributions')
   }
 
   return fields

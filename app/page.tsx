@@ -23,6 +23,9 @@ export default function HomePage() {
             <Link href="/network" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
               Network
             </Link>
+            <Link href="/map" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
+              Map
+            </Link>
             <Link href="/works" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
               Works
             </Link>
@@ -82,7 +85,7 @@ export default function HomePage() {
           </div>
           
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-4">
               <div className="text-center">
                 <div className="mx-auto h-12 w-12 flex items-center justify-center bg-blue-600 rounded-lg">
                   <svg
@@ -106,8 +109,43 @@ export default function HomePage() {
                   Find scholars by name, specialization, or time period across
                   Arabic, English, and Somali sources.
                 </p>
+                <Link href="/search">
+                  <Button className="mt-4 text-sm">
+                    Explore Scholars
+                  </Button>
+                </Link>
               </div>
               
+              <div className="text-center">
+                <div className="mx-auto h-12 w-12 flex items-center justify-center bg-purple-600 rounded-lg">
+                  <svg
+                    className="h-6 w-6 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="mt-6 text-lg font-medium text-gray-900">
+                  Historical Timeline
+                </h3>
+                <p className="mt-2 text-sm text-gray-600">
+                  Explore centuries of scholarship through an interactive
+                  timeline showing the evolution of Islamic thought.
+                </p>
+                <Link href="/timeline">
+                  <Button className="mt-4 text-sm">
+                    View Timeline
+                  </Button>
+                </Link>
+              </div>
+
               <div className="text-center">
                 <div className="mx-auto h-12 w-12 flex items-center justify-center bg-amber-600 rounded-lg">
                   <svg
@@ -125,16 +163,21 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="mt-6 text-lg font-medium text-gray-900">
-                  Intellectual Lineages
+                  Scholarly Networks
                 </h3>
                 <p className="mt-2 text-sm text-gray-600">
                   Discover how knowledge was transmitted through teacher-student
-                  relationships across centuries of scholarship.
+                  relationships and intellectual connections.
                 </p>
+                <Link href="/network">
+                  <Button className="mt-4 text-sm">
+                    View Network
+                  </Button>
+                </Link>
               </div>
               
               <div className="text-center">
-                <div className="mx-auto h-12 w-12 flex items-center justify-center bg-gray-600 rounded-lg">
+                <div className="mx-auto h-12 w-12 flex items-center justify-center bg-green-600 rounded-lg">
                   <svg
                     className="h-6 w-6 text-white"
                     fill="none"
@@ -155,12 +198,17 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="mt-6 text-lg font-medium text-gray-900">
-                  Scholarly Journeys
+                  Geographic Map
                 </h3>
                 <p className="mt-2 text-sm text-gray-600">
-                  Trace the physical and intellectual journeys of scholars
-                  from the Horn of Africa to centers of learning worldwide.
+                  Trace the physical journeys of scholars across the Horn of Africa
+                  and discover centers of learning.
                 </p>
+                <Link href="/map">
+                  <Button className="mt-4 text-sm">
+                    Explore Map
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

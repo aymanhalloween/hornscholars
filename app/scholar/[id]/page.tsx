@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ScholarCard } from '@/components/scholar/scholar-card'
 import { ScholarWorks } from '@/components/scholar/scholar-works'
+import { AutoLinkedText } from '@/components/ui/auto-linked-text'
 import { supabase } from '@/lib/supabase/client'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -127,21 +128,25 @@ export default async function ScholarPage({
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-700 leading-relaxed text-lg">
+                    <AutoLinkedText 
+                      className="text-gray-700 leading-relaxed text-lg"
+                      excludeCurrentEntity={scholar.id}
+                      as="p"
+                    >
                       {scholar.biography}
-                    </p>
+                    </AutoLinkedText>
                   </div>
                   
                   {/* Enhanced biographical context based on available data */}
                   <div className="mt-6 pt-4 border-t border-gray-200">
                     <h4 className="font-semibold text-gray-900 mb-3">Historical Context</h4>
-                    <p className="text-gray-700 leading-relaxed">
-                      {scholar.name_english} lived during the {century?.toLowerCase() || 'medieval period'}, 
-                      a significant era in the intellectual history of the Horn of Africa. 
-                      {scholar.birth_location && ` Born in ${scholar.birth_location}, they were part of the rich scholarly tradition of the region.`}
-                      {teachers.length > 0 && ` Their education under ${teachers.length} prominent ${teachers.length === 1 ? 'teacher' : 'teachers'} shaped their intellectual development.`}
-                      {students.length > 0 && ` As an educator, they influenced ${students.length} ${students.length === 1 ? 'student' : 'students'}, continuing the chain of Islamic scholarship.`}
-                    </p>
+                    <AutoLinkedText 
+                      className="text-gray-700 leading-relaxed"
+                      excludeCurrentEntity={scholar.id}
+                      as="p"
+                    >
+                      {`${scholar.name_english} lived during the ${century?.toLowerCase() || 'medieval period'}, a significant era in the intellectual history of the Horn of Africa. ${scholar.birth_location ? `Born in ${scholar.birth_location}, they were part of the rich scholarly tradition of the region.` : ''}${teachers.length > 0 ? ` Their education under ${teachers.length} prominent ${teachers.length === 1 ? 'teacher' : 'teachers'} shaped their intellectual development.` : ''}${students.length > 0 ? ` As an educator, they influenced ${students.length} ${students.length === 1 ? 'student' : 'students'}, continuing the chain of Islamic scholarship.` : ''}`}
+                    </AutoLinkedText>
                   </div>
                 </CardContent>
               </Card>
@@ -165,41 +170,119 @@ export default async function ScholarPage({
                     </div>
                   </div>
 
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-700 leading-relaxed">
-                      {scholar.name_english} was recognized as an authority in {scholar.specializations.length > 1 ? 'multiple fields' : scholar.specializations[0]}.
-                      {scholar.specializations.includes('Fiqh') || scholar.specializations.includes('Islamic Jurisprudence') || scholar.specializations.includes('Shafi Jurisprudence') 
-                        ? ' Their expertise in Islamic jurisprudence made them a sought-after authority on religious legal matters.' 
-                        : ''}
-                      {scholar.specializations.includes('Arabic Grammar') || scholar.specializations.includes('Arabic Language')
-                        ? ' Their mastery of Arabic language and grammar contributed significantly to linguistic scholarship in the region.' 
-                        : ''}
-                      {scholar.specializations.includes('Sufism') || scholar.specializations.includes('Spirituality')
-                        ? ' Their spiritual teachings and mystical insights influenced the development of Sufi practices in the Horn of Africa.' 
-                        : ''}
-                      {scholar.specializations.includes('Education') || scholar.specializations.includes('Islamic Education')
-                        ? ' Their pedagogical innovations helped shape educational methodologies for future generations.' 
-                        : ''}
-                    </p>
-                  </div>
-
-                  {/* Scholarly Impact */}
-                  {(works || []).length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                      <h4 className="font-semibold text-gray-900 mb-2">Intellectual Legacy</h4>
-                      <p className="text-gray-700 leading-relaxed">
-                        Through {(works || []).length} documented {(works || []).length === 1 ? 'work' : 'works'}, 
-                        {scholar.name_english} contributed lasting scholarship to their fields of expertise.
-                        {students.length > 0 && ` Their teaching influenced ${students.length} ${students.length === 1 ? 'student' : 'students'}, ensuring the continuation of their scholarly traditions.`}
-                      </p>
+                  {/* Notable Contributions */}
+                  {scholar.notable_contributions && (
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-3">Notable Contributions</h4>
+                      <div className="prose prose-gray max-w-none">
+                        <AutoLinkedText 
+                          className="text-gray-700 leading-relaxed"
+                          excludeCurrentEntity={scholar.id}
+                          as="p"
+                        >
+                          {scholar.notable_contributions}
+                        </AutoLinkedText>
+                      </div>
                     </div>
                   )}
+
+                  {/* Major Works List */}
+                  {scholar.major_works && scholar.major_works.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-3">Major Works</h4>
+                      <div className="space-y-2">
+                        {scholar.major_works.map((work, index) => (
+                          <div key={index} className="flex items-start gap-2 text-gray-700">
+                            <div className="w-2 h-2 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <AutoLinkedText 
+                              className="leading-relaxed"
+                              excludeCurrentEntity={scholar.id}
+                              linkWorks={true}
+                              linkScholars={false}
+                              as="span"
+                            >
+                              {work}
+                            </AutoLinkedText>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Scholarly Achievements */}
+                  {scholar.scholarly_achievements && scholar.scholarly_achievements.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-3">Scholarly Achievements</h4>
+                      <div className="space-y-2">
+                        {scholar.scholarly_achievements.map((achievement, index) => (
+                          <div key={index} className="flex items-start gap-2 text-gray-700">
+                            <div className="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="leading-relaxed">{achievement}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Intellectual Lineage */}
+                  {scholar.intellectual_lineage && (
+                    <div className="mt-4 pt-4 border-t border-gray-200">
+                      <h4 className="font-semibold text-gray-900 mb-3">Intellectual Lineage</h4>
+                      <div className="prose prose-gray max-w-none">
+                        <AutoLinkedText 
+                          className="text-gray-700 leading-relaxed"
+                          excludeCurrentEntity={scholar.id}
+                          as="p"
+                        >
+                          {scholar.intellectual_lineage}
+                        </AutoLinkedText>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Scholarly Impact */}
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <h4 className="font-semibold text-gray-900 mb-2">Scholarly Impact</h4>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+                      <div className="text-center bg-gray-50 rounded-lg p-3">
+                        <div className="text-2xl font-semibold text-blue-600">
+                          {scholar.manuscripts_authored || (works || []).length}
+                        </div>
+                        <div className="text-xs text-gray-500">Works Authored</div>
+                      </div>
+                      <div className="text-center bg-gray-50 rounded-lg p-3">
+                        <div className="text-2xl font-semibold text-green-600">
+                          {students.length}
+                        </div>
+                        <div className="text-xs text-gray-500">Students Taught</div>
+                      </div>
+                      <div className="text-center bg-gray-50 rounded-lg p-3">
+                        <div className="text-2xl font-semibold text-purple-600">
+                          {scholar.specializations?.length || 0}
+                        </div>
+                        <div className="text-xs text-gray-500">Specializations</div>
+                      </div>
+                      <div className="text-center bg-gray-50 rounded-lg p-3">
+                        <div className="text-2xl font-semibold text-amber-600">
+                          {scholar.teaching_years_start && scholar.teaching_years_end 
+                            ? scholar.teaching_years_end - scholar.teaching_years_start 
+                            : '—'}
+                        </div>
+                        <div className="text-xs text-gray-500">Teaching Years</div>
+                      </div>
+                    </div>
+                    <p className="text-gray-700 leading-relaxed">
+                      {scholar.name_english} was recognized as an authority in {scholar.specializations?.length > 1 ? 'multiple fields' : scholar.specializations?.[0] || 'Islamic scholarship'}.
+                      {scholar.major_works && scholar.major_works.length > 0 && ` Their ${scholar.major_works.length} major works contributed significantly to their fields of expertise.`}
+                      {students.length > 0 && ` Through teaching ${students.length} ${students.length === 1 ? 'student' : 'students'}, they ensured the continuation of their scholarly traditions.`}
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             )}
 
             {/* Educational & Teaching Journey */}
-            {(teachers.length > 0 || students.length > 0 || (scholar.locations && scholar.locations.length > 0)) && (
+            {(teachers.length > 0 || students.length > 0 || (scholar.locations && scholar.locations.length > 0) || (scholar.teaching_positions && scholar.teaching_positions.length > 0)) && (
               <Card className="border-l-4 border-l-purple-600">
                 <CardHeader>
                   <CardTitle className="text-xl text-purple-900">Educational & Teaching Journey</CardTitle>
@@ -225,6 +308,30 @@ export default async function ScholarPage({
                             <p className="text-sm text-gray-500 text-arabic">
                               {rel.scholar.name_arabic}
                             </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Teaching Positions */}
+                  {scholar.teaching_positions && scholar.teaching_positions.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-3">Teaching Positions</h4>
+                      <div className="space-y-3">
+                        {scholar.teaching_positions.map((position, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            <div className="mt-1">
+                              <div className="h-3 w-3 bg-purple-600 rounded-full"></div>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-gray-700 leading-relaxed">{position}</p>
+                              {scholar.teaching_years_start && scholar.teaching_years_end && (
+                                <p className="text-sm text-gray-500 mt-1">
+                                  {scholar.teaching_years_start}–{scholar.teaching_years_end}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -261,13 +368,31 @@ export default async function ScholarPage({
                     </div>
                   )}
 
-                  {/* Teaching Legacy */}
+                  {/* Notable Students from enhanced fields */}
+                  {scholar.students && scholar.students.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-3">Notable Students</h4>
+                      <p className="text-gray-700 leading-relaxed mb-4">
+                        {scholar.name_english} taught and influenced many students, including these notable scholars who carried forward their intellectual legacy.
+                      </p>
+                      <div className="space-y-2">
+                        {scholar.students.map((student, index) => (
+                          <div key={index} className="flex items-start gap-2 text-gray-700">
+                            <div className="w-2 h-2 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="leading-relaxed">{student}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Teaching Legacy from relationships */}
                   {students.length > 0 && (
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-3">Teaching Legacy</h4>
+                      <h4 className="font-semibold text-gray-900 mb-3">Documented Teacher-Student Relationships</h4>
                       <p className="text-gray-700 leading-relaxed mb-4">
-                        As an educator, {scholar.name_english} taught {students.length} {students.length === 1 ? 'student' : 'students'}, 
-                        passing on their knowledge and ensuring the continuation of their scholarly traditions.
+                        As an educator, {scholar.name_english} had documented relationships with {students.length} {students.length === 1 ? 'student' : 'students'}, 
+                        demonstrating their role in the transmission of knowledge.
                       </p>
                       <div className="grid gap-3 sm:grid-cols-2">
                         {students.slice(0, 4).map((rel) => {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { AutoLinkedText } from '@/components/ui/auto-linked-text'
 import { Calendar, MapPin, BookOpen, Users } from 'lucide-react'
 
 interface TimelineScholar {

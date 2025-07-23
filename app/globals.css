@@ -143,4 +143,41 @@
     @apply text-base placeholder-gray-500;
     @apply transition-all duration-200;
   }
+
+  /* Auto-linking Styles */
+  .auto-link {
+    @apply underline decoration-1 underline-offset-2 transition-colors duration-200;
+    @apply hover:decoration-2;
+  }
+
+  .auto-link-scholar {
+    @apply text-blue-600 decoration-blue-300 hover:text-blue-700 hover:decoration-blue-500;
+  }
+
+  .auto-link-location {
+    @apply text-green-600 decoration-green-300 hover:text-green-700 hover:decoration-green-500;
+  }
+
+  .auto-link-work {
+    @apply text-purple-600 decoration-purple-300 hover:text-purple-700 hover:decoration-purple-500;
+  }
+
+  /* Auto-link tooltip styles */
+  .auto-link {
+    @apply relative;
+  }
+
+  .auto-link:hover::after {
+    content: attr(title);
+    @apply absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2;
+    @apply bg-gray-900 text-white text-xs rounded-md px-2 py-1;
+    @apply opacity-90 pointer-events-none z-50;
+    @apply whitespace-nowrap;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+    to { opacity: 0.9; transform: translateX(-50%) translateY(0); }
+  }
 }

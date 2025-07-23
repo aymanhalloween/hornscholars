@@ -10,6 +10,15 @@ export interface Scholar {
   biography: string | null
   locations?: Location[]
   specializations: string[] | null
+  major_works: string[] | null
+  teaching_positions: string[] | null
+  scholarly_achievements: string[] | null
+  students: string[] | null
+  notable_contributions: string | null
+  intellectual_lineage: string | null
+  manuscripts_authored: number | null
+  teaching_years_start: number | null
+  teaching_years_end: number | null
   created_at: string
   updated_at: string
   search_vector?: unknown
@@ -201,6 +210,10 @@ export interface Database {
           death_location: string | null
           biography: string | null
           specializations: string[] | null
+          major_works: string[] | null
+          teaching_positions: string[] | null
+          scholarly_achievements: string[] | null
+          notable_contributions: string | null
           relevance_score: number
         }[]
       }

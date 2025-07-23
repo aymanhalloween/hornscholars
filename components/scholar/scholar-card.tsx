@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { AutoLinkedText } from '@/components/ui/auto-linked-text'
 import { formatScholarName, formatCentury } from '@/lib/utils'
 import type { Scholar } from '@/lib/types'
 import Link from 'next/link'
@@ -70,15 +71,18 @@ export function ScholarCard({ scholar, highlighted_fields = [], className }: Sch
 
             {/* Biography Preview */}
             {scholar.biography && (
-              <p 
+              <AutoLinkedText 
                 className={`text-sm text-gray-700 line-clamp-2 ${
                   highlighted_fields.includes('biography') ? 'bg-yellow-100' : ''
                 }`}
+                excludeCurrentEntity={scholar.id}
+                minLength={0}
+                as="p"
               >
                 {scholar.biography.length > 120 
                   ? `${scholar.biography.slice(0, 120)}...` 
                   : scholar.biography}
-              </p>
+              </AutoLinkedText>
             )}
 
             {/* Specializations */}
