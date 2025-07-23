@@ -132,7 +132,7 @@ export function MapFilters({ onFiltersChange }: MapFiltersProps) {
             {[1, 2, 3, 5, 10].map((count) => (
               <Button
                 key={count}
-                variant={filters.minScholarCount === count ? "default" : "outline"}
+                variant={filters.minScholarCount === count ? "primary" : "outline"}
                 size="sm"
                 onClick={() => handleMinScholarCountChange(count)}
                 className="w-full justify-start text-sm"

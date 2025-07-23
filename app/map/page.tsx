@@ -55,7 +55,7 @@ async function getMapData() {
     if (locationsError) throw locationsError
 
     // Process data for mapping
-    const locationsMap: Map<string, LocationData> = new Map()
+    const locationsMap = {} as Record<string, LocationData>
 
     // Process each scholar
     (scholars || []).forEach((scholar: any) => {
@@ -86,8 +86,8 @@ async function getMapData() {
       if (primaryLocation) {
         const locationKey = `${primaryLocation.latitude},${primaryLocation.longitude}`
         
-        if (!locationsMap.has(locationKey)) {
-          locationsMap.set(locationKey, {
+        if (!locationsMap[locationKey]) {
+          locationsMap[locationKey] = {
             id: primaryLocation.id,
             name: primaryLocation.name,
             latitude: primaryLocation.latitude,
@@ -97,10 +97,10 @@ async function getMapData() {
             scholar_count: 0,
             scholars: [],
             time_periods: []
-          })
+          }
         }
 
-        const locationData = locationsMap.get(locationKey)!
+        const locationData = locationsMap[locationKey]
         locationData.scholar_count++
         locationData.scholars.push({
           ...scholar,
@@ -118,7 +118,7 @@ async function getMapData() {
       }
     })
 
-    const mapLocations = Array.from(locationsMap.values())
+    const mapLocations = Object.values(locationsMap)
       .filter(loc => loc.latitude && loc.longitude)
       .sort((a, b) => b.scholar_count - a.scholar_count)
 
@@ -126,7 +126,7 @@ async function getMapData() {
     const totalScholars = mapLocations.reduce((sum, loc) => sum + loc.scholar_count, 0)
     const totalLocations = mapLocations.length
     const majorCenters = mapLocations.filter(loc => loc.scholar_count >= 3)
-    const countriesRepresented = [...new Set(mapLocations.map(loc => loc.country))].length
+    const countriesRepresented = Array.from(new Set(mapLocations.map(loc => loc.country))).length
 
     return {
       locations: mapLocations,
