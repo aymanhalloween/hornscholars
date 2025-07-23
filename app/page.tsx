@@ -1,8 +1,35 @@
 import { SearchBar } from '@/components/search/search-bar'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
+      {/* Navigation */}
+      <header className="absolute inset-x-0 top-0 z-50">
+        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+          <div className="flex lg:flex-1">
+            <Link href="/" className="-m-1.5 p-1.5">
+              <span className="text-xl font-bold text-gray-900">Horn Scholars</span>
+            </Link>
+          </div>
+          <div className="flex gap-x-6">
+            <Link href="/search" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
+              Scholars
+            </Link>
+            <Link href="/timeline" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
+              Timeline
+            </Link>
+            <Link href="/network" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
+              Network
+            </Link>
+            <Link href="/works" className="text-sm font-semibold leading-6 text-gray-900 hover:text-blue-600">
+              Works
+            </Link>
+          </div>
+        </nav>
+      </header>
+
       {/* Hero Section */}
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:py-56">
@@ -11,9 +38,9 @@ export default function HomePage() {
               Horn Scholars
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
-              The definitive digital archive of 600+ years of Somali Islamic
-              scholarship. Explore the intellectual heritage of scholars from
-              the Horn of Africa.
+              Discover the remarkable scholars who shaped 600+ years of Islamic
+              intellectual tradition in the Horn of Africa. Explore their lives,
+              teachings, and lasting contributions to Islamic scholarship.
             </p>
             
             {/* Search Section */}
@@ -45,12 +72,12 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl">
-              Explore Intellectual Networks
+              Discover Scholarly Legacies
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Discover the connections between scholars, trace intellectual
-              lineages, and explore the geographic spread of knowledge across
-              centuries.
+              Learn about the scholars who shaped Islamic thought in the Horn of Africa.
+              Trace their intellectual journeys, explore their contributions, and
+              understand the networks that connected generations of learning.
             </p>
           </div>
           
@@ -73,11 +100,11 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="mt-6 text-lg font-medium text-gray-900">
-                  Multilingual Search
+                  Scholar Discovery
                 </h3>
                 <p className="mt-2 text-sm text-gray-600">
-                  Search in Arabic, English, or Somali with advanced fuzzy
-                  matching for names and terms.
+                  Find scholars by name, specialization, or time period across
+                  Arabic, English, and Somali sources.
                 </p>
               </div>
               
@@ -98,11 +125,11 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="mt-6 text-lg font-medium text-gray-900">
-                  Scholar Networks
+                  Intellectual Lineages
                 </h3>
                 <p className="mt-2 text-sm text-gray-600">
-                  Explore teacher-student relationships and trace intellectual
-                  lineages across generations.
+                  Discover how knowledge was transmitted through teacher-student
+                  relationships across centuries of scholarship.
                 </p>
               </div>
               
@@ -128,11 +155,11 @@ export default function HomePage() {
                   </svg>
                 </div>
                 <h3 className="mt-6 text-lg font-medium text-gray-900">
-                  Geographic Journey
+                  Scholarly Journeys
                 </h3>
                 <p className="mt-2 text-sm text-gray-600">
-                  Follow scholars&apos; travels from Harar to Mecca to Cairo and
-                  beyond through interactive maps.
+                  Trace the physical and intellectual journeys of scholars
+                  from the Horn of Africa to centers of learning worldwide.
                 </p>
               </div>
             </div>

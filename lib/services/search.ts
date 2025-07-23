@@ -26,7 +26,7 @@ export async function searchScholars(
     if (!data) return []
 
     // Transform the results into SearchResult format
-    const results: SearchResult[] = data.map((item) => ({
+    const results: SearchResult[] = data.map((item: any) => ({
       scholar: {
         id: item.id,
         name_arabic: item.name_arabic,
@@ -34,6 +34,8 @@ export async function searchScholars(
         name_somali: item.name_somali,
         birth_year: item.birth_year,
         death_year: item.death_year,
+        birth_location: item.birth_location,
+        death_location: item.death_location,
         biography: item.biography,
         specializations: item.specializations || [],
         created_at: '', // Not returned by search function
@@ -99,6 +101,8 @@ export async function getScholarById(id: string): Promise<Scholar | null> {
       name_somali: data.name_somali,
       birth_year: data.birth_year,
       death_year: data.death_year,
+      birth_location: data.birth_location,
+      death_location: data.death_location,
       biography: data.biography,
       specializations: data.specializations || [],
       created_at: data.created_at,

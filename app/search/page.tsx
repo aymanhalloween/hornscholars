@@ -3,9 +3,10 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { SearchBar } from '@/components/search/search-bar'
+import { AdvancedSearch } from '@/components/search/advanced-search'
 import { ScholarCard } from '@/components/scholar/scholar-card'
 import { searchScholars } from '@/lib/services/search'
-import type { SearchResult } from '@/lib/types'
+import type { SearchResult, SearchFilters } from '@/lib/types'
 
 function SearchContent() {
   const router = useRouter()
@@ -15,14 +16,15 @@ function SearchContent() {
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState(query)
+  const [filters, setFilters] = useState<SearchFilters>({})
 
   useEffect(() => {
     if (query) {
-      handleSearch(query)
+      handleSearch(query, {})
     }
   }, [query])
 
-  const handleSearch = async (searchTerm: string) => {
+  const handleSearch = async (searchTerm: string, searchFilters: SearchFilters = {}) => {
     if (!searchTerm.trim()) {
       setResults([])
       return
@@ -30,8 +32,12 @@ function SearchContent() {
 
     setLoading(true)
     try {
-      const searchResults = await searchScholars(searchTerm, { limit: 50 })
+      const searchResults = await searchScholars(searchTerm, { 
+        limit: 50, 
+        ...searchFilters 
+      })
       setResults(searchResults)
+      setFilters(searchFilters)
     } catch (error) {
       console.error('Search failed:', error)
       setResults([])
@@ -47,13 +53,21 @@ function SearchContent() {
     }
   }
 
+  const handleClearSearch = () => {
+    setResults([])
+    setFilters({})
+    setSearchQuery('')
+  }
+
   return (
     <div className="min-h-screen bg-white">
       <div className="border-b border-gray-200">
         <div className="mx-auto max-w-7xl px-4 py-6">
-          <SearchBar 
-            onSearch={handleNewSearch}
-            className="max-w-3xl"
+          <AdvancedSearch
+            onSearch={handleSearch}
+            onClear={handleClearSearch}
+            initialQuery={query}
+            initialFilters={filters}
           />
         </div>
       </div>
