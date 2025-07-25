@@ -140,30 +140,19 @@ const cardAnimations = {
   animate: { 
     opacity: 1, 
     y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.4,
-      ease: [0.4, 0.0, 0.2, 1]
-    }
+    scale: 1
   },
   hover: {
     y: -8,
-    scale: 1.02,
-    transition: {
-      duration: 0.2,
-      ease: [0.4, 0.0, 0.2, 1]
-    }
+    scale: 1.02
   },
   tap: {
-    scale: 0.98,
-    transition: {
-      duration: 0.1
-    }
+    scale: 0.98
   }
 }
 
 export interface PremiumCardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>,
     VariantProps<typeof premiumCardVariants> {
   icon?: React.ReactNode
   title?: string
@@ -302,9 +291,12 @@ const PremiumCard = React.forwardRef<HTMLDivElement, PremiumCardProps>(
           animate="animate"
           whileHover="hover"
           whileTap="tap"
-          transition={{ delay }}
+          transition={{ 
+            delay,
+            duration: 0.4,
+            ease: "easeOut"
+          }}
           {...motionProps}
-          {...props}
         >
           {cardContent}
         </motion.div>
