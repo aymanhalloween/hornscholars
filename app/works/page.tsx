@@ -68,7 +68,7 @@ export default async function WorksPage() {
               href="/" 
               className="text-blue-600 hover:text-blue-700 text-sm font-medium"
             >
-              ← Back to Search
+              ← Back to Home
             </Link>
           </div>
           

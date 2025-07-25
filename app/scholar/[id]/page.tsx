@@ -60,7 +60,7 @@ export default async function ScholarPage({
         <div className="mx-auto max-w-7xl px-4 py-8">
           <div className="mb-4">
             <Link 
-              href="/search" 
+              href="/scholars" 
               className="text-blue-600 hover:text-blue-700 text-sm font-medium"
             >
               ← Back to Scholars
