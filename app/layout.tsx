@@ -1,17 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter, Noto_Sans_Arabic } from 'next/font/google'
+import { Noto_Sans_Arabic } from 'next/font/google'
+import { fonts, fontVariables } from '@/lib/fonts'
 import './globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-latin',
-})
 
 const notoSansArabic = Noto_Sans_Arabic({
   subsets: ['arabic'],
   display: 'swap',
   variable: '--font-arabic',
+  weight: ['300', '400', '500', '600', '700'],
+  fallback: ['system-ui', 'sans-serif'],
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -34,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${notoSansArabic.variable}`}>
-      <body className="min-h-screen bg-white">
+    <html lang="en" className={`${fontVariables} ${notoSansArabic.variable}`}>
+      <body className={`min-h-screen ${fonts.body.className} antialiased`}>
         <div className="flex flex-col min-h-screen">
           <main className="flex-1">{children}</main>
         </div>

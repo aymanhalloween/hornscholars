@@ -27,6 +27,11 @@ module.exports = {
           50: '#fffbeb',
           600: '#d97706',
         },
+        // Gold color for Islamic decorative elements
+        gold: {
+          500: '#d4af37',
+          600: '#b8932a',
+        },
       },
       fontFamily: {
         arabic: ['Noto Sans Arabic', 'sans-serif'],

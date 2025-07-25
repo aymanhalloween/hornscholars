@@ -1,47 +1,86 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Display:wght@300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Import Premium Utilities */
+@import '../styles/premium-utilities.css';
+
 :root {
-  /* Professional Color System */
-  --color-gray-50: #fafafa;
-  --color-gray-100: #f5f5f5;
-  --color-gray-200: #e5e5e5;
-  --color-gray-500: #737373;
-  --color-gray-900: #171717;
+  /* Premium Color System - Sophisticated with warm undertones */
+  /* Primary Colors */
+  --color-primary-50: #fafafa;
+  --color-primary-100: #f8f7f5;
+  --color-primary-200: #e5e3df;
+  --color-primary-300: #d1cfc9;
+  --color-primary-400: #a8a5a0;
+  --color-primary-500: #6b6863;
+  --color-primary-600: #4a4742;
+  --color-primary-700: #2d2b27;
+  --color-primary-800: #1a1a1a;
+  --color-primary-900: #0f0f0f;
   
-  --color-blue-50: #eff6ff;
-  --color-blue-600: #2563eb;
-  --color-blue-700: #1d4ed8;
+  /* Accent Colors */
+  --color-burgundy: #8b4513;
+  --color-gold: #d4af37;
+  --color-navy: #1e2a5e;
   
-  --color-amber-50: #fffbeb;
-  --color-amber-600: #d97706;
+  /* Feature Colors */
+  --color-blue: #2563eb;
+  --color-purple: #7c3aed;
+  --color-orange: #ea580c;
+  --color-green: #059669;
   
-  /* Typography */
+  /* Typography - Premium font system */
+  --font-display: 'Inter Display', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
   --font-arabic: 'Noto Sans Arabic', sans-serif;
-  --font-latin: 'Inter', sans-serif;
   
-  /* Spacing System - 8px grid */
-  --spacing-1: 0.25rem; /* 4px */
-  --spacing-2: 0.5rem;  /* 8px */
-  --spacing-3: 0.75rem; /* 12px */
-  --spacing-4: 1rem;    /* 16px */
-  --spacing-6: 1.5rem;  /* 24px */
-  --spacing-8: 2rem;    /* 32px */
-  --spacing-12: 3rem;   /* 48px */
-  --spacing-16: 4rem;   /* 64px */
+  /* Spacing System - 8px grid with golden ratio */
+  /* Micro spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 20px;
+  --space-2xl: 24px;
   
-  /* Shadows - Subtle elevation */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Macro spacing - Golden ratio inspired */
+  --space-macro-xs: 32px;
+  --space-macro-sm: 48px;
+  --space-macro-md: 80px;
+  --space-macro-lg: 128px;
+  --space-macro-xl: 208px;
   
-  /* Border Radius */
-  --radius-sm: 0.125rem; /* 2px */
-  --radius-md: 0.375rem; /* 6px */
-  --radius-lg: 0.5rem;   /* 8px */
+  /* Premium Shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  --shadow-premium: 0 8px 32px rgba(26, 26, 26, 0.12), 0 2px 8px rgba(26, 26, 26, 0.08);
+  --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+  
+  /* Border Radius System */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  
+  /* Animation Curves - Apple-inspired easing */
+  --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-sharp: cubic-bezier(0.4, 0.0, 0.6, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Duration Scale */
+  --duration-fast: 150ms;
+  --duration-standard: 250ms;
+  --duration-slow: 400ms;
+  --duration-page: 600ms;
 }
 
 @layer base {
