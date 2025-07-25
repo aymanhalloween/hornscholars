@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { MapPin, Users, Calendar, ExternalLink } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 // Dynamically import map components to avoid SSR issues
@@ -19,10 +19,6 @@ const TileLayer = dynamic(
 )
 const Marker = dynamic(
   () => import('react-leaflet').then((mod) => mod.Marker),
-  { ssr: false }
-)
-const Popup = dynamic(
-  () => import('react-leaflet').then((mod) => mod.Popup),
   { ssr: false }
 )
 
@@ -105,69 +101,7 @@ function CustomMarker({ location, onClick }: { location: MapLocation; onClick: (
       eventHandlers={{
         click: () => onClick(location)
       }}
-    >
-      <Popup>
-        <div className="w-64 p-2">
-          <div className="space-y-3">
-            <div>
-              <h3 className="font-semibold text-gray-900">{location.name}</h3>
-              <p className="text-sm text-gray-600">{location.country}</p>
-            </div>
-            
-            <div className="flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <Users className="h-4 w-4 text-blue-600" />
-                <span>{location.scholar_count} scholars</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4 text-green-600" />
-                <span>{location.time_periods.length} periods</span>
-              </div>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-500 mb-2">Time Periods:</p>
-              <div className="flex flex-wrap gap-1">
-                {location.time_periods.slice(0, 3).map((period) => (
-                  <Badge key={period} variant="outline" className="text-xs">
-                    {period}
-                  </Badge>
-                ))}
-                {location.time_periods.length > 3 && (
-                  <Badge variant="outline" className="text-xs">
-                    +{location.time_periods.length - 3} more
-                  </Badge>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-500 mb-2">Notable Scholars:</p>
-              <div className="space-y-1">
-                {location.scholars.slice(0, 3).map((scholar) => (
-                  <div key={scholar.id} className="text-xs">
-                    <Link 
-                      href={`/scholar/${scholar.id}`}
-                      className="text-blue-600 hover:text-blue-700 font-medium"
-                    >
-                      {scholar.name_english}
-                    </Link>
-                    <span className="text-gray-500 ml-1">
-                      {scholar.birth_year && `(${scholar.birth_year})`}
-                    </span>
-                  </div>
-                ))}
-                {location.scholars.length > 3 && (
-                  <p className="text-xs text-gray-500">
-                    +{location.scholars.length - 3} more scholars
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </Popup>
-    </Marker>
+    />
   )
 }
 
@@ -243,18 +177,19 @@ export function InteractiveMap({ locations, height = 500, className = '' }: Inte
         </MapContainer>
       </div>
 
-      {/* Location Details Modal */}
+      {/* Enhanced Location Details Modal */}
       {selectedLocation && (
-        <div className="absolute top-4 right-4 z-[1000]">
-          <Card className="w-80 max-h-96 overflow-y-auto shadow-lg">
-            <CardContent className="p-4">
-              <div className="space-y-4">
+        <div className="absolute top-4 right-4 z-[1000] animate-in slide-in-from-right-2 duration-200">
+          <Card className="w-96 max-h-[500px] overflow-hidden shadow-xl border-0 bg-white/95 backdrop-blur-sm">
+            <CardContent className="p-0">
+              {/* Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 text-white">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-semibold text-lg text-gray-900">
+                    <h3 className="font-bold text-xl">
                       {selectedLocation.name}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-blue-100 text-sm">
                       {selectedLocation.country} • {selectedLocation.region}
                     </p>
                   </div>
@@ -262,71 +197,95 @@ export function InteractiveMap({ locations, height = 500, className = '' }: Inte
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedLocation(null)}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-blue-100 hover:text-white hover:bg-blue-600 h-8 w-8 p-0"
                   >
                     ×
                   </Button>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center bg-blue-50 rounded-lg p-3">
-                    <div className="text-2xl font-semibold text-blue-600">
+              <div className="p-6 space-y-5">
+                {/* Stats */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="text-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
+                    <div className="text-3xl font-bold text-blue-700">
                       {selectedLocation.scholar_count}
                     </div>
-                    <div className="text-xs text-gray-600">Scholars</div>
+                    <div className="text-sm font-medium text-blue-600">Scholars</div>
                   </div>
-                  <div className="text-center bg-green-50 rounded-lg p-3">
-                    <div className="text-2xl font-semibold text-green-600">
+                  <div className="text-center bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
+                    <div className="text-3xl font-bold text-green-700">
                       {selectedLocation.time_periods.length}
                     </div>
-                    <div className="text-xs text-gray-600">Periods</div>
+                    <div className="text-sm font-medium text-green-600">Time Periods</div>
                   </div>
                 </div>
 
+                {/* Time Periods */}
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Time Periods</h4>
-                  <div className="flex flex-wrap gap-1">
+                  <h4 className="font-bold text-gray-900 mb-3 flex items-center">
+                    <div className="w-1 h-5 bg-blue-600 rounded-full mr-2"></div>
+                    Historical Periods
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
                     {selectedLocation.time_periods.map((period) => (
-                      <Badge key={period} variant="secondary" className="text-xs">
+                      <Badge 
+                        key={period} 
+                        className="bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border-blue-300 font-medium px-3 py-1"
+                      >
                         {period}
                       </Badge>
                     ))}
                   </div>
                 </div>
 
+                {/* Scholars */}
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Scholars</h4>
-                  <div className="space-y-2 max-h-32 overflow-y-auto">
+                  <h4 className="font-bold text-gray-900 mb-3 flex items-center">
+                    <div className="w-1 h-5 bg-green-600 rounded-full mr-2"></div>
+                    Notable Scholars
+                  </h4>
+                  <div className="space-y-3 max-h-40 overflow-y-auto">
                     {selectedLocation.scholars.map((scholar) => (
-                      <div key={scholar.id} className="flex items-center justify-between">
-                        <div>
+                      <div key={scholar.id} className="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 transition-colors">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <Link 
+                              href={`/scholar/${scholar.id}`}
+                              className="font-semibold text-blue-700 hover:text-blue-800 block"
+                            >
+                              {scholar.name_english}
+                            </Link>
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-xs text-gray-600 bg-white px-2 py-1 rounded-full border">
+                                {scholar.birth_year}–{scholar.death_year || 'present'}
+                              </span>
+                              {scholar.specializations && scholar.specializations.length > 0 && (
+                                <span className="text-xs text-green-700 bg-green-50 px-2 py-1 rounded-full border border-green-200">
+                                  {scholar.specializations[0]}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                           <Link 
                             href={`/scholar/${scholar.id}`}
-                            className="text-sm font-medium text-blue-600 hover:text-blue-700"
+                            className="text-gray-400 hover:text-blue-600 transition-colors ml-2"
                           >
-                            {scholar.name_english}
+                            <ExternalLink className="h-4 w-4" />
                           </Link>
-                          <p className="text-xs text-gray-500">
-                            {scholar.birth_year}–{scholar.death_year || '?'}
-                          </p>
                         </div>
-                        <Link 
-                          href={`/scholar/${scholar.id}`}
-                          className="text-gray-400 hover:text-gray-600"
-                        >
-                          <ExternalLink className="h-3 w-3" />
-                        </Link>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-2 border-t">
+                {/* Action Button */}
+                <div className="pt-4 border-t border-gray-200">
                   <Link
                     href={`/search?location=${encodeURIComponent(selectedLocation.name)}`}
-                    className="block w-full text-center bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded-md text-sm font-medium transition-colors"
+                    className="block w-full text-center bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 px-4 rounded-xl font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
                   >
-                    View All Scholars from {selectedLocation.name}
+                    Explore All Scholars from {selectedLocation.name}
                   </Link>
                 </div>
               </div>
